@@ -39,8 +39,8 @@ class CartePizzeria:
 
     def identique(self, el1, el2):
         if (isinstance(el2, Pizza)):
-            return (el1.name == el2.name and 
-                    el1.ingredients == el2.ingredients and 
+            return (el1.name == el2.name and
+                    el1.ingredients == el2.ingredients and
                     el1.base == el2.base)
         else:
             return el1.name == el2.name
