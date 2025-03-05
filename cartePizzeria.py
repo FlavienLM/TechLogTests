@@ -6,7 +6,7 @@ class CartePizzeria:
         self.menu = []
     
     def is_empty(self):
-        return self.menu.length() == 0
+        return len(self.menu) == 0
     
     def nb_pizzas(self):
         return len(self.menu)
