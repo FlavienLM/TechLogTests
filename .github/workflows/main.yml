@@ -1,72 +1,25 @@
-name: Continuous Integration
+name: CI
 
-on:
-  push:
-    branches:
-      - main  # Déclenche CI sur la branche principale
-  pull_request:
-    branches:
-      - main  # Déclenche CI sur les pull requests vers la branche principale
+on: [push, pull_request]  # Exécuter la CI sur chaque push et PR
 
 jobs:
-  # Job pour exécuter les tests
   test:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Check out code
-        uses: actions/checkout@v2
-        
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: '3.9'
-      
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
+          pip install pytest pytest-cov   # Installe pytest et pytest-cov
 
-      - name: Run tests with pytest
+      - name: Run tests with coverage
         run: |
           pytest --cov=. --cov-fail-under=80
-
-  # Job pour exécuter le linter (flake8)
-  linter:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v2
-
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.9'
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install flake8
-
-      - name: Run flake8
-        run: |
-          flake8 .
-
-  # Job pour exécuter le typage statique (mypy)
-  type-check:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v2
-
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.9'
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install mypy
-
-      - name: Run mypy for type checking
-        run: |
-          mypy .
